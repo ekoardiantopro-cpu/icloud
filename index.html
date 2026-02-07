@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Protected Link</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    /* Container untuk running text */
+    .running-container {
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid #2c3e50;
+      padding: 5px 0;
+      margin-bottom: 30px;
+      background-color: #ecf0f1;
+    }
+
+    /* Teks yang bergerak */
+    .running-text {
+      display: inline-block;
+      white-space: nowrap;
+      font-size: 50px; /* ukuran 50px */
+      font-weight: bold;
+      color: #2c3e50;
+      animation: move-left 10s linear infinite;
+    }
+
+    /* Animasi bergerak dari kanan ke kiri */
+    @keyframes move-left {
+      0% {
+        transform: translateX(100%);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    /* Input dan tombol */
+    input {
+      padding: 8px;
+      font-size: 16px;
+    }
+    button {
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Running text modern -->
+  <div class="running-container">
+    <div class="running-text">Masukkan Password untuk Mengakses Google Drive</div>
+  </div>
+
+  <!-- Form password -->
+  <input type="password" id="pw" placeholder="Password">
+  <br><br>
+  <button onclick="cek()">Buka File</button>
+  <p id="msg" style="color:red;"></p>
+
+  <script>
+    function cek() {
+      var passwordBenar = "@Bkl0306#";   // GANTI PASSWORD
+      var tujuan = "https://www.icloud.com/sharedalbum/#B1qJtdOXmRgk9Lq"; // GANTI LINK
+
+      var input = document.getElementById("pw").value;
+
+      if (input === passwordBenar) {
+        window.location.href = tujuan;
+      } else {
+        document.getElementById("msg").innerText = "Password salah!";
+      }
+    }
+  </script>
+</body>
+</html>
