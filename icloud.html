@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Protected Link</title>
+  <title>Akses File</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -10,7 +11,6 @@
       margin-top: 50px;
     }
 
-    /* Container untuk running text */
     .running-container {
       width: 100%;
       overflow: hidden;
@@ -20,65 +20,85 @@
       background-color: #ecf0f1;
     }
 
-    /* Teks yang bergerak */
     .running-text {
       display: inline-block;
       white-space: nowrap;
-      font-size: 50px; /* ukuran 50px */
+      font-size: 40px;
       font-weight: bold;
       color: #2c3e50;
       animation: move-left 10s linear infinite;
     }
 
-    /* Animasi bergerak dari kanan ke kiri */
     @keyframes move-left {
-      0% {
-        transform: translateX(100%);
-      }
-      100% {
-        transform: translateX(-100%);
-      }
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
     }
 
-    /* Input dan tombol */
-    input {
-      padding: 8px;
+    input, button {
+      padding: 10px;
       font-size: 16px;
     }
+
     button {
-      padding: 8px 16px;
-      font-size: 16px;
       cursor: pointer;
+    }
+
+    #msg {
+      margin-top: 10px;
+      color: red;
     }
   </style>
 </head>
 <body>
 
-  <!-- Running text modern -->
   <div class="running-container">
-    <div class="running-text">Masukkan Password untuk Mengakses Google Drive</div>
+    <div class="running-text">
+      Masukkan Password untuk Mengakses File
+    </div>
   </div>
 
-  <!-- Form password -->
   <input type="password" id="pw" placeholder="Password">
   <br><br>
   <button onclick="cek()">Buka File</button>
-  <p id="msg" style="color:red;"></p>
+  <p id="msg"></p>
 
   <script>
-    function cek() {
-      var passwordBenar = "@Bkl0306#";   // GANTI PASSWORD
-      var tujuan = "https://www.icloud.com/sharedalbum/#B1q532ODWKyb0qy"; // GANTI LINK
+    // hash dari password @Bkl0306#
+    const _0x8f2a = "c55069d4b9eea8e4c16b3ed0e6091beb21080fa38553ce9155f70cd27320c21c";
 
-      var input = document.getElementById("pw").value;
+    // link tujuan (di-encode biar tidak terlalu jelas)
+    const _0xurl = atob("aHR0cHM6Ly93d3cuaWNsb3VkLmNvbS9zaGFyZWRhbGJ1bS8jQjFxNTMyT0RXS3liMHF5");
 
-      if (input === passwordBenar) {
-        window.location.href = tujuan;
+    async function _0xhash(text) {
+      const data = new TextEncoder().encode(text);
+      const buffer = await crypto.subtle.digest("SHA-256", data);
+      return Array.from(new Uint8Array(buffer))
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+    }
+
+    async function cek() {
+      const input = document.getElementById("pw").value;
+      const msg = document.getElementById("msg");
+
+      if (!input) {
+        msg.textContent = "Password wajib diisi!";
+        return;
+      }
+
+      const hasil = await _0xhash(input);
+
+      if (hasil === _0x8f2a) {
+        window.location.href = _0xurl;
       } else {
-        document.getElementById("msg").innerText = "Password salah!";
+        msg.textContent = "Password salah!";
       }
     }
-  </script>
-</body>
 
+    document.getElementById("pw").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") cek();
+    });
+  </script>
+
+</body>
 </html>
