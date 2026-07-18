@@ -1,104 +1,39 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Akses File</title>
+<script>
+  const _0x8f2a = "c55069d4b9eea8e4c16b3ed0e6091beb21080fa38553ce9155f70cd27320c21c";
+  const _0xurl = atob("aHR0cHM6Ly93d3cuaWNsb3VkLmNvbS9zaGFyZWRhbGJ1bS8jQjFxNTMyT0RXS3liMHF5");
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
+  async function _0xhash(text) {
+    const data = new TextEncoder().encode(text);
+    const buffer = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(buffer))
+      .map(b => b.toString(16).padStart(2, "0"))
+      .join("");
+  }
+
+  async function cek() {
+    let input = document.getElementById("pw").value;
+
+    // 🔥 FIX PENTING (hapus spasi + karakter aneh)
+    input = input.trim();
+
+    const msg = document.getElementById("msg");
+
+    const hasil = await _0xhash(input);
+
+    // 🔥 DEBUG (lihat di console)
+    console.log("INPUT:", "[" + input + "]");
+    console.log("HASH INPUT:", hasil);
+    console.log("HASH BENAR:", _0x8f2a);
+
+    if (hasil === _0x8f2a) {
+      alert("Login berhasil!");
+      window.location.href = _0xurl;
+    } else {
+      msg.textContent = "Password salah!";
     }
+  }
 
-    .running-container {
-      width: 100%;
-      overflow: hidden;
-      border: 1px solid #2c3e50;
-      padding: 5px 0;
-      margin-bottom: 30px;
-      background-color: #ecf0f1;
-    }
-
-    .running-text {
-      display: inline-block;
-      white-space: nowrap;
-      font-size: 40px;
-      font-weight: bold;
-      color: #2c3e50;
-      animation: move-left 10s linear infinite;
-    }
-
-    @keyframes move-left {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
-    }
-
-    input, button {
-      padding: 10px;
-      font-size: 16px;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    #msg {
-      margin-top: 10px;
-      color: red;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="running-container">
-    <div class="running-text">
-      Masukkan Password untuk Mengakses File
-    </div>
-  </div>
-
-  <input type="password" id="pw" placeholder="Password">
-  <br><br>
-  <button onclick="cek()">Buka File</button>
-  <p id="msg"></p>
-
-  <script>
-    // hash dari password @Bkl0306#
-    const _0x8f2a = "c55069d4b9eea8e4c16b3ed0e6091beb21080fa38553ce9155f70cd27320c21c";
-
-    // link tujuan (di-encode biar tidak terlalu jelas)
-    const _0xurl = atob("aHR0cHM6Ly93d3cuaWNsb3VkLmNvbS9zaGFyZWRhbGJ1bS8jQjFxNTMyT0RXS3liMHF5");
-
-    async function _0xhash(text) {
-      const data = new TextEncoder().encode(text);
-      const buffer = await crypto.subtle.digest("SHA-256", data);
-      return Array.from(new Uint8Array(buffer))
-        .map(b => b.toString(16).padStart(2, "0"))
-        .join("");
-    }
-
-    async function cek() {
-      const input = document.getElementById("pw").value.trim();
-      const msg = document.getElementById("msg");
-
-      if (!input) {
-        msg.textContent = "Password wajib diisi!";
-        return;
-      }
-
-      const hasil = await _0xhash(input);
-
-      if (hasil === _0x8f2a) {
-        window.location.href = _0xurl;
-      } else {
-        msg.textContent = "Password salah!";
-      }
-    }
-
-    document.getElementById("pw").addEventListener("keypress", function(e) {
-      if (e.key === "Enter") cek();
-    });
-  </script>
-
-</body>
-</html>
+  document.getElementById("pw").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") cek();
+  });
+</script>
