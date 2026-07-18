@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Akses File</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -51,7 +52,9 @@
 <body>
 
   <div class="running-container">
-    <div class="running-text">Masukkan Password untuk Mengakses File</div>
+    <div class="running-text">
+      Masukkan Password untuk Mengakses File
+    </div>
   </div>
 
   <input type="password" id="pw" placeholder="Password">
@@ -60,17 +63,18 @@
   <p id="msg"></p>
 
   <script>
-    // HASH dari password "@Bkl0306#"
-    const HASH_BENAR = "c55069d4b9eea8e4c16b3ed0e6091beb21080fa38553ce9155f70cd27320c21c";
-    const TUJUAN = "https://www.icloud.com/sharedalbum/#B1q532ODWKyb0qy";
+    // hash dari password @Bkl0306#
+    const _0x8f2a = "c55069d4b9eea8e4c16b3ed0e6091beb21080fa38553ce9155f70cd27320c21c";
 
-    // fungsi hash SHA-256
-    async function sha256(text) {
-      const encoder = new TextEncoder();
-      const data = encoder.encode(text);
-      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+    // link tujuan (di-encode biar tidak terlalu jelas)
+    const _0xurl = atob("aHR0cHM6Ly93d3cuaWNsb3VkLmNvbS9zaGFyZWRhbGJ1bS8jQjFxNTMyT0RXS3liMHF5");
+
+    async function _0xhash(text) {
+      const data = new TextEncoder().encode(text);
+      const buffer = await crypto.subtle.digest("SHA-256", data);
+      return Array.from(new Uint8Array(buffer))
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
     }
 
     async function cek() {
@@ -82,16 +86,15 @@
         return;
       }
 
-      const hashInput = await sha256(input);
+      const hasil = await _0xhash(input);
 
-      if (hashInput === HASH_BENAR) {
-        window.location.href = TUJUAN;
+      if (hasil === _0x8f2a) {
+        window.location.href = _0xurl;
       } else {
         msg.textContent = "Password salah!";
       }
     }
 
-    // tekan Enter untuk submit
     document.getElementById("pw").addEventListener("keypress", function(e) {
       if (e.key === "Enter") cek();
     });
